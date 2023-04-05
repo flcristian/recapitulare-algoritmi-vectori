@@ -1,6 +1,6 @@
-#include "capitolul-subsiruri-de-elemente.h"
+#include "capitolul-sortari-si-interclasari.h"
 
 int main()
 {
-    problema5();
+    problema4();
 }
