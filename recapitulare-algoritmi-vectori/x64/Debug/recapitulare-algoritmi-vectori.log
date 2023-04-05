@@ -1,2 +1,4 @@
 ﻿  recapitulare-algoritmi-vectori.cpp
+D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\capitolul-cautari-de-elemente.h(117): warning C4715: 'binarySearchProblema2b': not all control paths return a value
+D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\capitolul-cautari-de-elemente.h(175): warning C4715: 'binarySearchProblema3': not all control paths return a value
   recapitulare-algoritmi-vectori.vcxproj -> D:\mycode\vectori\recapitulare-algoritmi-vectori\x64\Debug\recapitulare-algoritmi-vectori.exe

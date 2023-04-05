@@ -1,4 +1,4 @@
-#include "capitolul-maxime-si-minime.h"
+#include "capitolul-cautari-de-elemente.h"
 
 int main()
 {
