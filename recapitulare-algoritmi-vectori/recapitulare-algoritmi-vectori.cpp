@@ -1,6 +1,6 @@
-#include "capitolul-subsiruri-de-elemente.h"
+#include "capitolul-parcurgeri.h"
 
 int main()
 {
-    problema1();
+    problema5();
 }
