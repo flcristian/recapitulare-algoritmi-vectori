@@ -1,4 +1,4 @@
-#include "capitolul-cautari-de-elemente.h"
+#include "capitolul-subsiruri-de-elemente.h"
 
 int main()
 {
