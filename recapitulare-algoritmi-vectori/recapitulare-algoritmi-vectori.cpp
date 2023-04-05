@@ -1,4 +1,4 @@
-#include "capitolul-parcurgeri.h"
+#include "capitolul-maxime-si-minime.h"
 
 int main()
 {
