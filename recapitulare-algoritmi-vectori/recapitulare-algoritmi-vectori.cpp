@@ -1,6 +1,6 @@
-#include "capitolul-sortari-si-interclasari.h"
+#include "fisa-vectori.h"
 
 int main()
 {
-    problema4();
+    problema25();
 }

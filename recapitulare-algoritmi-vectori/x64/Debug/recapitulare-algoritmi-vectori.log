@@ -1,2 +1,4 @@
 ﻿  recapitulare-algoritmi-vectori.cpp
+D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(618,6): warning C4101: 'tempA': unreferenced local variable
+D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(618,18): warning C4101: 'tempB': unreferenced local variable
   recapitulare-algoritmi-vectori.vcxproj -> D:\mycode\vectori\recapitulare-algoritmi-vectori\x64\Debug\recapitulare-algoritmi-vectori.exe

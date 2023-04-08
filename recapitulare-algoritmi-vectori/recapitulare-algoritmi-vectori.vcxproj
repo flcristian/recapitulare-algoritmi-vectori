@@ -135,6 +135,7 @@
     <ClInclude Include="capitolul-parcurgeri.h" />
     <ClInclude Include="capitolul-sortari-si-interclasari.h" />
     <ClInclude Include="capitolul-subsiruri-de-elemente.h" />
+    <ClInclude Include="fisa-vectori.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
