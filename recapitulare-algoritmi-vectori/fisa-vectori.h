@@ -549,36 +549,19 @@ void citireProblema25(int x[], int y[], int& n, int& m) {
 	f.close();
 }
 
-void sentinelBubbleSortProblema25(int x[], int n) {
-	int i = 0;
-	bool flag = true;
-	while (flag && i < n) {
-		flag = false;
-		for (int j = n - 1; j > i; j--) {
-			if (x[j - 1] > x[j]) {
-				int r = x[j - 1];
-				x[j - 1] = x[j];
-				x[j] = r;
-				flag = true;
-			}
-		}
-		i++;
-	}
-}
-
 void copiereVectoriProblema25(int x[], int tempA[], int n) {
 	for (int i = 0; i < n; i++) {
 		tempA[i] = x[i];
 	}
 }
 
-bool apartineProblema25(int x[], int n, int numar) {
+int apartineProblema25(int x[], int n, int numar) {
 	for (int i = 0; i < n; i++) {
 		if (x[i] == numar) {
-			return 1;
+			return i;
 		}
 	}
-	return 0;
+	return -1;
 }
 
 void reuniuneaVectorilorProblema25(int x[], int y[], int n, int m) {
@@ -586,7 +569,7 @@ void reuniuneaVectorilorProblema25(int x[], int y[], int n, int m) {
 	copiereVectoriProblema25(x, tempA, n);
 
 	for (int i = 0; i < m; i++) {
-		if (!apartineProblema25(tempA, n, y[i])) {
+		if (apartineProblema25(tempA, n, y[i]) == -1) {
 			tempA[n] = y[i];
 			n++;
 		}
@@ -601,7 +584,7 @@ void reuniuneaVectorilorProblema25(int x[], int y[], int n, int m) {
 void intersectiaVectorilorProblema25(int x[], int y[], int n, int m) {
 	int z[100], d = 0;
 	for (int i = 0; i < m; i++) {
-		if (apartineProblema25(x, n, y[i])) {
+		if (apartineProblema25(x, n, y[i]) != -1) {
 			z[d] = y[i];
 			d++;
 		}
@@ -625,7 +608,18 @@ void diferentaVectorilorProblema25(int x[], int y[], int n, int m) {
 	int tempA[100], d;
 	copiereVectoriProblema25(x, tempA, n);
 	d = n;
+	for (int i = 0; i < m; i++) {
+		int k = apartineProblema25(tempA, d, y[i]);
+		if (k != -1) {
+			eliminarePozitieProblema25(tempA, d, k);
+		}
+	}
 
+	cout << "\nDiferenta :\n";
+	for (int i = 0; i < d; i++) {
+		cout << tempA[i] << " ";
+	}
+	cout << endl;
 }
 
 void problema25() {
@@ -635,3 +629,234 @@ void problema25() {
 	intersectiaVectorilorProblema25(x, y, n, m);
 	diferentaVectorilorProblema25(x, y, n, m);
 }
+
+// Problema 26
+// Fie un tablou unidimensional ce contine n numere naturale si un singur
+// element nul.
+// Sa se sorteze vectorul (orice intershcimbare trebuie efectuata
+// prin itermediul elementului nul).
+
+void citireProblema26(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+int pozitieElementNulProblema26(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		if (x[i] == 0) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void afisareProblema26(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void sentinelBubbleSortProblema26(int x[], int n, int& pos0) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			if (x[j - 1] < x[j]) {
+				if (x[j - 1] == 0) {
+					x[j - 1] = x[j];
+					x[j] = 0;
+					pos0 = j;
+				}
+				else if (x[j] == 0) {
+					x[j] = x[j - 1];
+					x[j - 1] = 0;
+					pos0 = j - 1;
+				}
+				else {
+					x[pos0] = x[j - 1];
+					x[j - 1] = 0;
+
+					x[j - 1] = x[j];
+					x[j] = 0;
+
+					x[j] = x[pos0];
+					x[pos0] = 0;
+				}
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void problema26() {
+	int x[100], n;
+	citireProblema26(x, n);
+	int nul = pozitieElementNulProblema26(x, n);
+	sentinelBubbleSortProblema26(x, n, nul);
+	afisareProblema26(x, n);
+}
+
+// Problema 27
+// Sa se determine daca vectorul y contine toate elementele
+// vectorului x, pe pozitii consecutive si sa se afiseze indicele
+// primului element in vectorul y.
+// Exemplu : y = [1 2 (3 4 2) 8 1] ; x = [ 2 3 4 ] => 3
+
+// <=> Fisier citire <=>
+// Primul rand : doua valori separate printr-un spatiu
+// (numarul de elemente din primul vector, respectiv celui de-al doilea)
+// Al doilea rand : valorile primului vector
+// Al treilea rand : valorile celui de-al doilea vector
+
+void citireProblema27(int x[], int y[], int& n, int& m) {
+	ifstream f("input.txt");
+	f >> n >> m;
+	for (int i = 0; i < n; i++) {
+		f >> x[i];
+	}
+	for (int i = 0; i < m; i++) {
+		f >> y[i];
+	}
+	f.close();
+}
+
+int pozitieElementProblema27(int x[], int n, int numar) {
+	for (int i = 0; i < n; i++) {
+		if (x[i] == numar) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void eliminarePozitieProblema27(int x[], int& n, int k) {
+	for (int i = k; i < n - 1; i++) {
+		x[i] = x[i + 1];
+	}
+	n--;
+}
+
+void copiereVectorProblema27(int x[], int temp[], int n, int& d) {
+	for (int i = 0; i < n; i++) {
+		temp[i] = x[i];
+	}
+	d = n;
+}
+
+int rezolvareProblema27(int x[], int y[], int n, int m) {
+	int temp[100], d;
+	copiereVectorProblema27(x, temp, n, d);
+
+	int count = 0, r = -1;
+	for (int i = 0; i < m; i++) {
+		int k = pozitieElementProblema27(temp, d, y[i]);
+		if (k != -1) {
+			if (r == -1) {
+				r = i + 1;
+			}
+			count++;
+			eliminarePozitieProblema27(temp, d, k);
+			if (count == n) {
+				return r;
+			}
+		}
+		else {
+			copiereVectorProblema27(x, temp, n, d);
+			count = 0;
+			r = -1;
+		}
+	}
+}
+
+void problema27() {
+	int x[100], y[100], n, m;
+	citireProblema27(x, y, n, m);
+	cout << rezolvareProblema27(x, y, n, m);
+}
+
+// Problema 28
+// A0 = 1 ; Daca x apartine sirului => si 2x+1, 3x+1 apartin
+// Exemplu : n = 6 : 1 3 4 7 10 9
+// Elementele nu trebuie sa fie neaparat distincte!
+
+void creareSirProblema29(int x[], int n) {
+	x[0] = 1;
+	int i = 1;
+	while (i < n) {
+		int k = (i - 1) / 2;
+		if (i % 2 == 1) {
+			x[i] = 2 * x[i - k - 1] + 1;
+		}
+		else {
+			x[i] = 3 * x[i - k - 2] + 1;
+		}
+		i++;
+	}
+}
+
+void afisareProblema28(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema28() {
+	int x[1000], n;
+	cout << "Introduceti n : ";
+	cin >> n;
+	creareSirProblema29(x, n);
+	afisareProblema28(x, n);
+}
+
+// Problema 29
+// Sa se determine daca un numar este de tip munte.
+
+bool esteTipMunteProblema29(int n) {
+	int last = 0;
+	bool lower = false;
+	while (n > 0) {
+		int c = n % 10;
+		if (c > last) {
+			if (lower) {
+				return 0;
+			}
+		}
+		else {
+			lower = true;
+		}
+		last = c;
+		n /= 10;
+	}
+	return 1;
+}
+
+void afisareProblema29(bool flag) {
+	cout << "Numarul ";
+	if (flag) {
+		cout << "este";
+	}
+	else {
+		cout << "nu este";
+	}
+	cout << " de tip munte." << endl;
+}
+
+void problema29() {
+	int n;
+	cout << "Introduceti n : ";
+	cin >> n;
+
+	bool flag = esteTipMunteProblema29(n);
+	afisareProblema29(flag);
+}
+
+// Problema 30
