@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Culegere Mate-Info">
+      <UniqueIdentifier>{24fe988c-48b9-4afe-aba0-8c4c65bf7848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Fisa">
+      <UniqueIdentifier>{e576ab3d-5b5f-438f-8736-a6a4f24daa57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="recapitulare-algoritmi-vectori.cpp">
@@ -20,20 +26,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="capitolul-parcurgeri.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="capitolul-cautari-de-elemente.h">
+      <Filter>Header Files\Culegere Mate-Info</Filter>
     </ClInclude>
     <ClInclude Include="capitolul-maxime-si-minime.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Culegere Mate-Info</Filter>
     </ClInclude>
-    <ClInclude Include="capitolul-cautari-de-elemente.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="capitolul-subsiruri-de-elemente.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="capitolul-parcurgeri.h">
+      <Filter>Header Files\Culegere Mate-Info</Filter>
     </ClInclude>
     <ClInclude Include="capitolul-sortari-si-interclasari.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Culegere Mate-Info</Filter>
+    </ClInclude>
+    <ClInclude Include="capitolul-subsiruri-de-elemente.h">
+      <Filter>Header Files\Culegere Mate-Info</Filter>
+    </ClInclude>
+    <ClInclude Include="fisa-vectori.h">
+      <Filter>Header Files\Fisa</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
