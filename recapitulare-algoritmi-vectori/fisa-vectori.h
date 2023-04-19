@@ -905,3 +905,328 @@ void problema30() {
 }
 
 // Problema 31
+// Sa se stearga dintr-un vector, un numar de elemente,
+// astfel incat la final sa se obtina un sir strict crescator.
+// Primul element din vectorul initial nu se va sterge.
+
+void citireProblema31(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void eliminarePozitieProblema31(int x[], int& n, int k) {
+	for (int i = k; i < n - 1; i ++) {
+		x[i] = x[i + 1];
+	}
+	n--;
+}
+
+void stergereProblema31(int x[], int& n) {
+	for (int i = 1; i < n; i++) {
+		if (x[i] < x[i - 1]) {
+			eliminarePozitieProblema31(x, n, i);
+			i--;
+		}
+	}
+}
+
+void afisareProblema31(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema31() {
+	int x[100], n;
+	citireProblema31(x, n);
+	stergereProblema31(x, n);
+	afisareProblema31(x, n);
+}
+
+// Problema 32
+// Sa se afiseze pe linii, elementele unui vector dupa
+// cifra dominanta (prima in scrierea zecimala). Pe aceeasi
+// linie vor fi scrise elementele cu aceeasi cifra dominanta.
+
+struct Linie {
+	int cifra;
+	int x[100];
+	int n = 0;
+};
+
+void citireProblema32(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+int cifraDominantaProblema32(int n) {
+	while (n / 10 > 0) {
+		n /= 10;
+	}
+	return n;
+}
+
+int pozitieCifraProblema32(int c, Linie linii[], int m) {
+	for (int i = 0; i < m; i++) {
+		if (linii[i].cifra == c) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void formareLiniiProblema32(int x[], int n, Linie linii[], int& m) {
+	for (int i = 0; i < n; i++) {
+		int c = cifraDominantaProblema32(x[i]);
+		int p = pozitieCifraProblema32(c, linii, m);
+		if (p != -1) {
+			linii[p].x[linii[p].n] = x[i];
+			linii[p].n = linii[p].n + 1;
+		}
+		else {
+			linii[m].cifra = c;
+			linii[m].x[linii[m].n] = x[i];
+			linii[m].n = linii[m].n + 1;
+			m++;
+		}
+	}
+}
+
+void sortareLiniiProblema32(Linie linii[], int m) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < m) {
+		flag = false;
+		for (int j = m - 1; j > i; j--) {
+			if (linii[j].cifra < linii[j - 1].cifra) {
+				Linie r = linii[j];
+				linii[j] = linii[j - 1];
+				linii[j - 1] = r;
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void afisareLiniiProblema32(Linie linii[], int m) {
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < linii[i].n; j++) {
+			cout << linii[i].x[j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void problema32() {
+	int x[100], n;
+	citireProblema32(x, n);
+
+	Linie linii[100];
+	int m = 0;
+	formareLiniiProblema32(x, n, linii, m);
+	sortareLiniiProblema32(linii, m);
+	afisareLiniiProblema32(linii, m);
+}
+
+// Problema 33
+// Sa se sorteze un tablou unidimensional descrescator
+// in functie de numarul de cifre distincte al elementelor.
+
+void citireProblema33(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+bool apareNumarul(int x[], int m, int c) {
+	for (int i = 0; i < m; i++) {
+		if (x[i] == c) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int countCifreDistincteProblema33(int n) {
+	int count = 0;
+	int x[100], m = 0;
+	while (n > 0) {
+		int c = n % 10;
+		if (!apareNumarul(x, m, c)) {
+			count++;
+			x[m] = c;
+			m++;
+		}
+		n /= 10;
+	}
+	return count;
+}
+
+void sortareProblema33(int x[], int n) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			int c1 = countCifreDistincteProblema33(x[j]);
+			int c2 = countCifreDistincteProblema33(x[j - 1]);
+			if (c1 > c2) {
+				int r = x[j];
+				x[j] = x[j - 1];
+				x[j - 1] = r;
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void afisareProblema33(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema33() {
+	int x[100], n;
+	citireProblema33(x, n);
+	sortareProblema33(x, n);
+	afisareProblema33(x, n);
+}
+
+// Problema 34
+// Sa se ordoneze crescator un vector de numere reale dupa
+// partea intreaga a lor, iar daca partea intreaga este egala,
+// descrescator dupa cea fractionara.
+
+void citireProblema34(double x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void sortareProblema34(double x[], int n) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			int intreaga1 = x[j];
+			int intreaga2 = x[j - 1];
+			double fractionara1 = abs(x[j] - intreaga1);
+			double fractionara2 = abs(x[j - 1] - intreaga2);
+			if (intreaga1 < intreaga2) {
+				double r = x[j];
+				x[j] = x[j - 1];
+				x[j - 1] = r;
+				flag = true;
+			}
+			else if (intreaga1 == intreaga2) {
+				if (fractionara1 > fractionara2) {
+					double r = x[j];
+					x[j] = x[j - 1];
+					x[j - 1] = r;
+					flag = true;
+				}
+			}
+		}
+		i++;
+	}
+}
+
+void afisareProblema34(double x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema34() {
+	double x[100];
+	int n;
+	citireProblema34(x, n);
+	sortareProblema34(x, n);
+	afisareProblema34(x, n);
+}
+
+// Problema 35
+// Creati cu valorile unui tablou unidimensional
+// de 2*n elemente un sir de fractii a caror suma
+// este maxima. Fiecare fractie se va afisa pe cate
+// o linie printr-o pereche de numere (numarator-numitor).
+
+void citireProblema35(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void eliminarePozitieProblema35(int x[], int& n, int k) {
+	for (int i = k; i < n - 1; i++) {
+		x[i] = x[i + 1];
+	}
+	n--;
+}
+
+int posMaxProblema35(int x[], int n) {
+	int max = x[0], p = 0;
+	for (int i = 1; i < n; i++) {
+		if (x[i] > max) {
+			max = x[i];
+			p = i;
+		}
+	}
+	return p;
+}
+
+int posMinProblema35(int x[], int n) {
+	int min = x[0], p = 0;
+	for (int i = 1; i < n; i++) {
+		if (x[i] < min) {
+			min = x[i];
+			p = i;
+		}
+	}
+	return p;
+}
+
+void rezolvareProblema35(int x[], int n) {
+	while (n > 0) {
+		int pMax = posMaxProblema35(x, n);
+		int pMin = posMinProblema35(x, n);
+		cout << x[pMax] << " " << x[pMin] << endl;
+		eliminarePozitieProblema35(x, n, pMax);
+		eliminarePozitieProblema35(x, n, pMin);
+	}
+}
+
+void problema35() {
+	int x[100], n;
+	citireProblema35(x, n);
+	rezolvareProblema35(x, n);
+}
