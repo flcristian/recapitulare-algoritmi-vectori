@@ -860,3 +860,48 @@ void problema29() {
 }
 
 // Problema 30
+// Se considera un tablou unidimensional cu n elemente ce
+// reprezinta o permutare a multimii 1..n. Asupra elementelor se vor
+// face urmatoarele tipuri de mutari: in ordine de la 1 la n, fiecare
+// element a[i] se va schimba cu elementul de pe pozitia i + a[i].
+// Daca aceasta pozitie este mai mare decat n, atunci numerotarea se continua
+// pe pozitia 1. Sa se afiseze continutul vectorului la finalul operatiilor.
+
+void citireProblema30(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void modificareProblema30(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		int r = x[i];
+		int pos = i + x[i] + 1;
+		if (pos % n != 0) {
+			pos = pos % n;
+		}
+		pos--;
+		x[i] = x[pos];
+		x[pos] = r;
+	}
+}
+
+void afisareProblema30(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema30() {
+	int x[100], n;
+	citireProblema30(x, n);
+	modificareProblema30(x, n);
+	afisareProblema30(x, n);
+}
+
+// Problema 31
