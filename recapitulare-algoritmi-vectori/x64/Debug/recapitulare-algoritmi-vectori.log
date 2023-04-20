@@ -1,6 +1,2 @@
 ﻿  recapitulare-algoritmi-vectori.cpp
-D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(1135,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(1136,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(1260,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-D:\mycode\vectori\recapitulare-algoritmi-vectori\recapitulare-algoritmi-vectori\fisa-vectori.h(777): warning C4715: 'rezolvareProblema27': not all control paths return a value
   recapitulare-algoritmi-vectori.vcxproj -> D:\mycode\vectori\recapitulare-algoritmi-vectori\x64\Debug\recapitulare-algoritmi-vectori.exe

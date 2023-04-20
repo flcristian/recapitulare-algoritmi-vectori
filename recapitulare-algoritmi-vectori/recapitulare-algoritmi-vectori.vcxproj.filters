@@ -19,6 +19,15 @@
     <Filter Include="Header Files\Fisa">
       <UniqueIdentifier>{e576ab3d-5b5f-438f-8736-a6a4f24daa57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Probleme Extra">
+      <UniqueIdentifier>{b69920cb-d590-4496-947e-c573ed5ee9af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Probleme Extra\Horner">
+      <UniqueIdentifier>{49c2b4a1-8500-4fe7-bc65-a587ff0101ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Probleme Extra\Subsecventa Suma Maxima">
+      <UniqueIdentifier>{ee49655e-13e3-4259-a102-52a4924a69f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="recapitulare-algoritmi-vectori.cpp">
@@ -43,6 +52,12 @@
     </ClInclude>
     <ClInclude Include="fisa-vectori.h">
       <Filter>Header Files\Fisa</Filter>
+    </ClInclude>
+    <ClInclude Include="problema-horner.h">
+      <Filter>Header Files\Probleme Extra\Horner</Filter>
+    </ClInclude>
+    <ClInclude Include="problema-subsecventa-suma-maxima.h">
+      <Filter>Header Files\Probleme Extra\Subsecventa Suma Maxima</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
