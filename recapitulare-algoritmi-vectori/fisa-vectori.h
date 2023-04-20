@@ -1230,3 +1230,221 @@ void problema35() {
 	citireProblema35(x, n);
 	rezolvareProblema35(x, n);
 }
+
+// Problema 36
+// Sa se adauge intre oricare doua elemente intregi
+// de semne contrare un numar pozitiv
+// format din alipirea acestora.
+
+void citireProblema36(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+int countCifreProblema36(int n) {
+	int c = 0;
+	while (n != 0) {
+		c++;
+		n /= 10;
+	}
+	return c;
+}
+
+int alipireProblema36(int n1, int n2) {
+	int c = countCifreProblema36(n2);
+	int numar = abs(n1) * pow(10, c);
+	numar += abs(n2);
+	return numar;
+}
+
+void adaugarePozitie(int x[], int& n, int k, int nr) {
+	for (int i = n; i > k; i--) {
+		x[i] = x[i - 1];
+	}
+	x[k] = nr;
+	n++;
+}
+
+void modificareProblema36(int x[], int& n) {
+	for (int i = 0; i < n - 1; i++) {
+		bool a1(abs(x[i]) != x[i]);
+		bool a2(abs(x[i + 1]) != x[i + 1]);
+		if (a1 != a2) {
+			int numar = alipireProblema36(x[i], x[i + 1]);
+			adaugarePozitie(x, n, i + 1, numar);
+			i++;
+		}
+	}
+}
+
+void afisareProblema36(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema36() {
+	int x[100], n;
+	citireProblema36(x, n);
+	modificareProblema36(x, n);
+	afisareProblema36(x, n);
+}
+
+// Problema 37
+// ? ? ? ? ?
+
+// Problema 38
+// Sa se determine numarul de subsiruri strict crescatoare
+// de valori consecutive in care poate fi partitionat
+// vectorul.
+
+struct Subsir {
+	int x[100];
+	int d = 0;
+
+	int last() {
+		if (d == 0) {
+			return -1;
+		}
+		return x[d - 1];
+	}
+};
+
+void citireProblema38(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+int posMinProblema38(int x[], int n) {
+	int min = x[0], p = 0;
+	for (int i = 1; i < n; i++) {
+		if (x[i] < min) {
+			min = x[i];
+			p = i;
+		}
+	}
+	return p;
+}
+
+void eliminarePozitieProblema38(int x[], int& n, int k) {
+	for (int i = k; i < n - 1; i++) {
+		x[i] = x[i + 1];
+	}
+	n--;
+}
+
+int gasireSubsirProblema38(Subsir s[], int m, int n) {
+	for (int i = 0; i < m; i++) {
+		if (s[i].last() == n - 1) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void formareSubsiruriProblema38(int x[], int n, Subsir s[], int& m) {
+	while (n > 0) {
+		int pMin = posMinProblema38(x, n);
+		int min = x[pMin];
+
+		int k = gasireSubsirProblema38(s, m, min);
+		if (k == -1) {
+			s[m].x[s[m].d] = min;
+			s[m].d = s[m].d + 1;
+			m++;
+		}
+		else {
+			s[k].x[s[k].d] = min;
+			s[k].d = s[k].d + 1;
+		}
+
+		eliminarePozitieProblema38(x, n, pMin);
+	}
+}
+
+void problema38() {
+	int x[100], n;
+	citireProblema38(x, n);
+	
+	Subsir s[100];
+	int m = 0;
+
+	formareSubsiruriProblema38(x, n, s, m);
+	
+	cout << m << endl;
+}
+
+// Problema 39
+// Sa se determine toate secventele de pe pozitii
+// consecutive, care au suma egala cu S.
+
+void citireProblema39(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void afisareSecventaProblema39(int x[], int start, int end) {
+	for (int i = start; i <= end; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void rezolvareProblema39(int x[], int n, int suma) {
+	for (int i = 0; i < n; i++) {
+		int s = 0;
+		for (int j = i; j < n; j++) {
+			s += x[j];
+			if (suma == s) {
+				afisareSecventaProblema39(x, i, j);
+			}
+		}
+	}
+}
+
+void problema39() {
+	int x[100], n;
+	citireProblema39(x, n);
+
+	int suma;
+	cout << "Introduceti suma : ";
+	cin >> suma;
+
+	rezolvareProblema39(x, n, suma);
+}
+
+// Problema 40
+// Sa se determine o submultime de elemente dintr-un
+// vector a caror suma sa fie divizibila cu numarul de
+// elemente al vectorului.
+
+void citireProblema40(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void problema40() {
+	int x[100], n;
+	citireProblema40(x, n);
+}
