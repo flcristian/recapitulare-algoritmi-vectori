@@ -1430,7 +1430,7 @@ void problema39() {
 }
 
 // Problema 40
-// Sa se determine o submultime de elemente dintr-un
+// Sa se determine o secventele de elemente dintr-un
 // vector a caror suma sa fie divizibila cu numarul de
 // elemente al vectorului.
 
@@ -1444,7 +1444,510 @@ void citireProblema40(int x[], int& n) {
 	f.close();
 }
 
+void afisareSecventaProblema40(int x[], int start, int end) {
+	for (int i = start; i <= end; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void secventaProblema40(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		int s = 0;
+		for (int j = i; j < n; j++) {
+			s += x[j];
+			if (s % n == 0) {
+				afisareSecventaProblema39(x, i, j);
+			}
+		}
+	}
+}
+
 void problema40() {
 	int x[100], n;
 	citireProblema40(x, n);
+	secventaProblema40(x, n);
+}
+
+// Problema 41
+// Sa se interclaseze elementele pare din doi vectori.
+
+// <=> Fisier citire <=>
+// Primul rand : doua valori separate printr-un spatiu
+// (numarul de elemente din primul vector, respectiv celui de-al doilea)
+// Al doilea rand : valorile primului vector
+// Al treilea rand : valorile celui de-al doilea vector
+
+void citireProblema41(int x[], int y[], int& n, int& m) {
+	ifstream f("input.txt");
+	f >> n >> m;
+	for (int i = 0; i < n; i++) {
+		f >> x[i];
+	}
+	for (int i = 0; i < m; i++) {
+		f >> y[i];
+	}
+	f.close();
+}
+
+void separareProblema41(int x[], int n, int p[], int& d) {
+	d = 0;
+	for (int i = 0; i < n; i++) {
+		if (x[i] % 2 == 0) {
+			p[d] = x[i];
+			d++;
+		}
+	}
+}
+
+void interclasareProblema41(int x[], int y[], int z[], int n, int m, int& d) {
+	int i = 0, j = 0, k = 0;
+	while (i < n && j < m) {
+		if (x[i] == y[j]) {
+			z[k] = x[i];
+			i++;
+			j++;
+			k++;
+		}
+		else if (x[i] < y[j]) {
+			z[k] = x[i];
+			i++;
+			k++;
+		}
+		else {
+			z[k] = y[j];
+			j++;
+			k++;
+		}
+	}
+	while (i < n) {
+		z[k] = x[i];
+		i++;
+		k++;
+	}
+	while (j < m) {
+		z[k] = y[j];
+		j++;
+		k++;
+	}
+	d = k;
+}
+
+void afisareProblema41(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema41() {
+	int x[100], y[100], n, m;
+	citireProblema41(x, y, n, m);
+
+	int p1[100], p2[100], d1, d2;
+	separareProblema41(x, n, p1, d1);
+	separareProblema41(y, m, p2, d2);
+
+	int z[100], d;
+	interclasareProblema41(p1, p2, z, d1, d2, d);
+	afisareProblema41(z, d);
+}
+
+// Problema 42
+// Fie un tablou cu 2^n elemente. Din acesta se
+// poate obtine un tablou cu 2^(n-1) elemente, unde
+// b[0] = a[0] * a[1], b[1] = a[2] * a[3], etc.
+// Sa se repete operatia atata timp cat nu exista
+// in vectorul obtinut numere mai mari decat S.
+
+struct Vector {
+	int x[100];
+	int n = 0;
+
+	int max() {
+		int m = x[0];
+		for (int i = 1; i < n; i++) {
+			if (x[i] > m) {
+				m = x[i];
+			}
+		}
+		return m;
+	}
+};
+
+void citireProblema42(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void formareVectorProblema42(int x[], int y[], int n, int& m) {
+	for (int i = 0; i < n; i += 2) {
+		y[m] = x[i] * x[i + 1];
+		m++;
+	}
+}
+
+void rezolvareProblema42(Vector v[], int& m, int s) {
+	int i = 0;
+	while (v[i].max() < s && v[i].n >= 2) {
+		formareVectorProblema42(v[i].x, v[m].x, v[i].n, v[m].n);
+		i++;
+		m++;
+	}
+	if (v[i].max() > s) {
+		m--;
+	}
+}
+
+void afisareProblema42(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema42() {
+	Vector v[100];
+	int m = 1;
+	citireProblema42(v[0].x, v[0].n);
+
+	int s;
+	cout << "Introduceti numarul s : ";
+	cin >> s;
+
+	rezolvareProblema42(v, m, s);
+	afisareProblema42(v[m - 1].x, v[m - 1].n);
+}
+
+// Problema 43
+// Avem la dispozitie k semne de -.
+// Afisati produsul maxim dupa ce schimbam
+// semnul a k numere din vector.
+// (Nu se pot folosi doua semne de - la un singur
+// element)
+
+void citireProblema43(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+int produsMaxProblema43(int x[], int n, int m) {
+	int pMax = 0;
+	for (int i = 0; i < n; i++) {
+		int p = 1, k = m;
+		for (int j = 0; j < n; j++) {
+			if (i != j) {
+				if (k > 0 && x[i] < 0) {
+					p *= abs(x[j]);
+					k--;
+				}
+				else {
+					p *= x[j];
+				}
+			}
+		}
+		if (pMax == 0) {
+			pMax = p;
+		}
+		if (p > pMax) {
+			pMax = p;
+		}
+	}
+	return pMax;
+}
+
+void problema43() {
+	int x[100], n;
+	citireProblema43(x, n);
+
+	int m;
+	cout << "Introduceti numarul de semne - : ";
+	cin >> m;
+
+	cout << produsMaxProblema43(x, n, m) << endl;
+}
+
+// Problema 44
+// Sa se determine al n-lea element al sirului :
+// 1 3 4 7 8 10 11 15 16 18 19 22 23 25 26 31 32....
+
+int formareSirProblema44(int n) {
+	int x[1000];
+
+	x[0] = 1;
+	int i = 1;
+
+	int k = 0, c = 3, p = 1;
+
+	while (i < n) {
+		if (i % 2 == 0 || p == 0) {
+			x[i] = x[i - 1] + 1;
+			p++;
+		}
+		else {
+			if (k % 4 == 0 || k % 4 == 2) {
+				x[i] = x[i - 1] + 2;
+			}
+			else if (k % 4 == 1) {
+				x[i] = x[i - 1] + 3;
+			}
+			else if (k % 4 == 3) {
+				x[i] = x[i - 1] + c + 1;
+				c++;
+			}
+			k++;
+			p = 0;
+		}
+		i++;
+	}
+
+	return x[i - 1];
+}
+
+void problema44() {
+	int n;
+	cout << "Introduceti n : ";
+	cin >> n;
+	cout << formareSirProblema44(n);
+}
+
+// Problema 45
+// Sa se interclaseze elementele impare din doi vectori.
+
+// <=> Fisier citire <=>
+// Primul rand : doua valori separate printr-un spatiu
+// (numarul de elemente din primul vector, respectiv celui de-al doilea)
+// Al doilea rand : valorile primului vector
+// Al treilea rand : valorile celui de-al doilea vector
+
+void citireProblema45(int x[], int y[], int& n, int& m) {
+	ifstream f("input.txt");
+	f >> n >> m;
+	for (int i = 0; i < n; i++) {
+		f >> x[i];
+	}
+	for (int i = 0; i < m; i++) {
+		f >> y[i];
+	}
+	f.close();
+}
+
+void sortareProblema45(int x[], int n) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			if (x[j] < x[j - 1]) {
+				int r = x[j];
+				x[j] = x[j - 1];
+				x[j - 1] = r;
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void separareProblema45(int x[], int n, int y[], int& d) {
+	d = 0;
+	for (int i = 0; i < n; i++) {
+		if (x[i] % 2 == 1) {
+			y[d] = x[i];
+			d++;
+		}
+	}
+}
+
+void interclasareProblema45(int x[], int y[], int z[], int n, int m, int& d) {
+	int i = 0, j = 0, k = 0;
+	while (i < n && j < m) {
+		if (x[i] == y[j]) {
+			z[k] = x[i];
+			i++;
+			j++;
+			k++;
+		}
+		else if (x[i] < y[j]) {
+			z[k] = x[i];
+			i++;
+			k++;
+		}
+		else {
+			z[k] = y[j];
+			j++;
+			k++;
+		}
+	}
+	while (i < n) {
+		z[k] = x[i];
+		i++;
+		k++;
+	}
+	while (j < m) {
+		z[k] = y[j];
+		j++;
+		k++;
+	}
+	d = k;
+}
+
+void afisareProblema45(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema45() {
+	int x[100], y[100], n, m;
+	citireProblema45(x, y, n, m);
+
+	int i1[100], i2[100], d1, d2;
+	separareProblema45(x, n, i1, d1);
+	separareProblema45(y, m, i2, d2);
+	sortareProblema45(i2, d2);
+
+	int z[100], d;
+	interclasareProblema45(i1, i2, z, d1, d2, d);
+	afisareProblema45(z, d);
+}
+
+// Problema 46
+// Sa se elimine toate elementele aflate
+// intre prima aparitie a unui cub
+// perfect si ultima aparitie a unuia.
+
+void citireProblema46(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void eliminarePozitieProblema46(int x[], int& n, int k) {
+	for (int i = k; i < n - 1; i++) {
+		x[i] = x[i + 1];
+	}
+	n--;
+}
+
+bool esteCubProblema46(int n) {
+	for (int i = 0; i <= n; i++) {
+		if (pow(i, 3) == n) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int firstPosCubProblema46(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		if (esteCubProblema46(x[i])) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int lastPosCubProblema46(int x[], int n) {
+	for (int i = n - 1; i > -1; i--) {
+		if (esteCubProblema46(x[i])) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void rezolvareProblema46(int x[], int& n) {
+	int fPos = firstPosCubProblema46(x, n);
+	int lPos = lastPosCubProblema46(x, n);
+	int c = lPos - fPos + 1;
+	while (c > 0) {
+		eliminarePozitieProblema46(x, n, fPos);
+		c--;
+	}
+}
+
+void afisareProblema46(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema46() {
+	int x[100], n;
+	citireProblema46(x, n);
+	rezolvareProblema46(x, n);
+	afisareProblema46(x, n);
+}
+
+// Problema 47
+// Sa se inverseze elementele dintre perechiile de indici
+// pe rand.
+
+// <=> Fisier citire <=>
+// Primul rand : un numar m (numarul de perechi de indici)
+// Urmatoarele m linii : perechiile de indici
+// Ultimul rand : valorile vectorului
+
+void citireProblema47(int x[], int& n, int indici[100][2], int& m) {
+	ifstream f("input.txt");
+	f >> m;
+	for (int i = 0; i < m; i++) {
+		f >> indici[i][0] >> indici[i][1];
+	}
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void inversareIntrePozitiiProblema47(int x[], int n, int p1, int p2) {
+	int y[100], m = 0;
+	p1--, p2;
+	for (int i = p2 - 1; i > p1 - 1; i--) {
+		y[m] = x[i];
+		m++;
+	}
+	for (int i = p1, j = 0; i < p2; i++, j++) {
+		x[i] = y[j];
+	}
+}
+
+void rezolvareProblema47(int x[], int n, int indici[100][2], int m) {
+	for (int i = 0; i < m; i++) {
+		inversareIntrePozitiiProblema47(x, n, indici[i][0], indici[i][1]);
+	}
+}
+
+void afisareProblema47(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void problema47() {
+	int x[100], n;
+	int indici[100][2], m;
+	citireProblema47(x, n, indici, m);
+	rezolvareProblema47(x, n, indici, m);
+	afisareProblema47(x, n);
 }
