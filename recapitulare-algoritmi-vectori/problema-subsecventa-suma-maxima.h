@@ -25,19 +25,22 @@ void citire() {
 }
 
 void secventa() {
-	int max = x[0];
+	int max = x[0], maxStart = 0, maxEnd = 0;
+	int suma = 0, newStart = 0;
 	for (int i = 0; i < n; i++) {
-		int s = 0, j = i;
-		while (j < n) {
-			s += x[j];
-			if (s > max) {
-				max = s;
-				start = i;
-				lenght = j - i + 1;
+		suma += x[i];
+		if (suma < 0) {
+			if (suma - x[i] > max) {
+				max = suma - x[i];
+				maxStart = newStart;
+				maxEnd = i;
 			}
-			j++;
+			suma = 0;
+			newStart = i + 1;
 		}
 	}
+	start = maxStart;
+	lenght = maxEnd - maxStart;
 }
 
 void rezolvare() {
@@ -45,5 +48,3 @@ void rezolvare() {
 	secventa();
 	cout << start << " " << lenght << endl;
 }
-
-// De continuat ^ ^ ^
