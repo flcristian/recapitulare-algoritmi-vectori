@@ -1,6 +1,6 @@
-#include "problema-subsecventa-suma-maxima.h"
+#include "fisa-vectori-2.h"
 
 int main()
 {
-    rezolvare();
+	problema25();
 }

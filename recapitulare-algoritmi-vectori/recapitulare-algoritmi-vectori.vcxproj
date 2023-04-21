@@ -135,7 +135,8 @@
     <ClInclude Include="capitolul-parcurgeri.h" />
     <ClInclude Include="capitolul-sortari-si-interclasari.h" />
     <ClInclude Include="capitolul-subsiruri-de-elemente.h" />
-    <ClInclude Include="fisa-vectori.h" />
+    <ClInclude Include="fisa-vectori-1.h" />
+    <ClInclude Include="fisa-vectori-2.h" />
     <ClInclude Include="problema-horner.h" />
     <ClInclude Include="problema-subsecventa-suma-maxima.h" />
   </ItemGroup>
