@@ -117,5 +117,50 @@ void problema25() {
 	produsPolinoame(P, Q);
 }
 
-// Problema 26
-// 
+// Problema 29
+// Sa se afiseze sirul de lungime maxima 
+// de tip Zig-Zag care se poate genera cu 
+// elementele sirului citit.
+// Zig-Zag = a1 <= a2 >= a3 <= a4 >= a5
+
+void citireProblema29(int x[], int& n) {
+	ifstream f("input.txt");
+	n = 0;
+	while (!f.eof()) {
+		f >> x[n];
+		n++;
+	}
+	f.close();
+}
+
+void afisareProblema29(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void sortareZigZag(int x[], int n) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			bool k(x[j] > x[j - 1]);
+			if ((int)k != j % 2) {
+				int r = x[j];
+				x[j] = x[j - 1];
+				x[j - 1] = r;
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void problema29() {
+	int x[100], n;
+	citireProblema29(x, n);
+	sortareZigZag(x, n);
+	afisareProblema29(x, n);
+}
