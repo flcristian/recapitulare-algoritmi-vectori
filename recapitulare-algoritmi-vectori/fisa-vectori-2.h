@@ -9,6 +9,11 @@ using namespace std;
 // Sa se scrie un program care calculeaza suma si
 // produsul a doua palindroame.
 
+// <=> Fisier Citire <=>
+// Primul rand : doua numere naturale (gradele polinoamelor)
+// Al doilea rand : coeficientii primului polinom
+// Al treilea rand : coeficientii celui de-al doilea polinom
+
 struct ElementPolinom {
 	int coeficient = 0;
 	int putere = 0;
@@ -115,6 +120,183 @@ void problema25() {
 	sumaPolinoame(P, Q);
 
 	produsPolinoame(P, Q);
+}
+
+// Problema 27
+// Se dau doua multimi.
+// Sa se determine intersectia si reuniunea acestora, iar
+// apoi sa se compare eficienta implementarilor celor doua
+// operatii cu cele doua reprezentari.
+
+// <=> Fisier Citire <=>
+// Primul rand : doua numere naturale (dimensiunea vectorilor)
+// Al doilea rand : elementele primului vector
+// Al treilea rand : elementele celui de-al doilea vector
+
+void citireProblema27(int a[], int b[], int& n, int& m){
+	ifstream f("input.txt");
+	f >> n >> m;
+	for (int i = 0; i < n; i++) {
+		f >> a[i];
+	}
+	for (int i = 0; i < m; i++) {
+		f >> b[i];
+	}
+	f.close();
+}
+
+void sortareVector(int x[], int n) {
+	int i = 0;
+	bool flag = true;
+	while (flag && i < n) {
+		flag = false;
+		for (int j = n - 1; j > i; j--) {
+			if (x[j] < x[j - 1]) {
+				int r = x[j];
+				x[j] = x[j - 1];
+				x[j - 1] = r;
+				flag = true;
+			}
+		}
+		i++;
+	}
+}
+
+void intersectiaPrinMultime(int a[], int b[], int x[], int n, int m, int& d) {
+	int i = 0, j = 0, k = 0;
+	while (i < n && j < m) {
+		if (a[i] == b[j]) {
+			x[k] = a[i];
+			i++;
+			j++;
+			k++;
+		}
+		else if (a[i] < b[j]) {
+			i++;
+		}
+		else {
+			j++;
+		}
+	}
+	d = k;
+}
+
+void intersectiaPrinFrecventa(int fa[], int fb[], int f[]) {
+	for (int i = 0; i < 100; i++) {
+		if (fa[i] > 0 && fb[i] > 0) {
+			f[i]++;
+		}
+	}
+}
+
+void reuniuneaPrinMultime(int a[], int b[], int x[], int n, int m, int& d) {
+	int i = 0, j = 0, k = 0;
+	while (i < n && j < m) {
+		if (a[i] == b[j]) {
+			x[k] = a[i];
+			i++;
+			j++;
+			k++;
+		}
+		else if (a[i] < b[j]) {
+			x[k] = a[i];
+			i++;
+			k++;
+		}
+		else {
+			x[k] = b[j];
+			j++;
+			k++;
+		}
+	}
+	while (i < n) {
+		x[k] = a[i];
+		i++;
+		k++;
+	}
+	while (j < m) {
+		x[k] = b[j];
+		j++;
+		k++;
+	}
+	d = k;
+}
+
+void reuniuneaPrinFrecventa(int fa[], int fb[], int f[]) {
+	for (int i = 0; i < 100; i++) {
+		if (fa[i] > 0 || fb[i] > 0) {
+			f[i]++;
+		}
+	}
+}
+
+void afisareVectorMultime(int x[], int n) {
+	for (int i = 0; i < n; i++) {
+		cout << x[i] << " ";
+	}
+	cout << endl;
+}
+
+void afisareVectorFrecventa(int f[]) {
+	for (int i = 0; i < 100; i++) {
+		if (f[i] != 0) {
+			cout << i << " ";
+		}
+	}
+	cout << endl;
+}
+
+void frecventaVector(int x[], int f[], int n) {
+	for (int i = 0; i < n; i++) {
+		f[x[i]]++;
+	}
+}
+
+void problema27() {
+	int a[100], b[100], n, m;
+	citireProblema27(a, b, n, m);
+	sortareVector(a, n);
+	sortareVector(b, m);
+
+	int fa[100]{}, fb[100]{};
+	frecventaVector(a, fa, n);
+	frecventaVector(b, fb, m);
+
+	// Afisare multimi.
+	cout << "A = ";
+	afisareVectorMultime(a, n);
+	cout << "B = ";
+	afisareVectorMultime(b, m);
+
+	// - - - - - - //
+	// Intersectia : 
+	int i[100], fi[100]{}, di;
+	cout << "\nIntersectia :" << endl;
+		
+	// Prin multime.
+	intersectiaPrinMultime(a, b, i, n, m, di);
+	cout << "Prin multime = ";
+	afisareVectorMultime(i, di);
+
+	// Prin frecventa.
+	intersectiaPrinFrecventa(fa, fb, fi);
+	cout << "Prin frecventa = ";
+	afisareVectorFrecventa(fi);
+
+	// - - - - - - //
+	// Reuniunea :
+	int r[100], fr[100]{}, dr;
+	cout << "\nReuniunea :" << endl;
+
+	// Prin multime.
+	reuniuneaPrinMultime(a, b, r, n, m, dr);
+	cout << "Prin multime = ";
+	afisareVectorMultime(r, dr);
+
+	// Prin frecventa.
+	reuniuneaPrinFrecventa(fa, fb, fi);
+	cout << "Prin frecventa = ";
+	afisareVectorFrecventa(fi);
 }
 
 // Problema 28
