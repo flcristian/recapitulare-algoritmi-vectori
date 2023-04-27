@@ -117,6 +117,69 @@ void problema25() {
 	produsPolinoame(P, Q);
 }
 
+// Problema 28
+// Se da un numar natural nenul. Scrieti un program
+// care sa determine si sa contorizeze toate modalitatile de a scrie
+// numarul ca suma de minim doua numere intregi consecutive.
+
+struct Suma {
+	int x[100];
+	int n = 0;
+};
+
+void creareMultimeProblema28(int x[], int n, int& d) {
+	d = 0;
+	for (int i = 0 - n + 1; i < n + 1; i++) {
+		x[d] = i;
+		d++;
+	}
+}
+
+void adaugareSuma(Suma sume[], int& m, int s, int d) {
+	for (int i = s; i <= d; i++) {
+		sume[m].x[sume[m].n] = i;
+		sume[m].n++;
+	}
+	m++;
+}
+
+void aflareSume(Suma sume[], int x[], int d, int& m, int n) {
+	m = 0;
+	for (int i = 0; i < d - 1; i++) {
+		int suma = 0;
+		for (int j = i; j < d; j++) {
+			suma += x[j];
+			if (suma == n) {
+				adaugareSuma(sume, m, x[i], x[j]);
+			}
+		}
+	}
+}
+
+void afisareSume(Suma sume[], int m) {
+	cout << "S-au format " << m << " sume." << endl;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < sume[i].n; j++) {
+			cout << sume[i].x[j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void problema28() {
+	int n;
+	cout << "Introduceti n : ";
+	cin >> n;
+
+	int x[100], d;
+	creareMultimeProblema28(x, n, d);
+
+	Suma sume[100];
+	int m;
+	aflareSume(sume, x, d, m, n);
+	afisareSume(sume, m);
+}
+
 // Problema 29
 // Sa se afiseze sirul de lungime maxima 
 // de tip Zig-Zag care se poate genera cu 
